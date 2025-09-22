@@ -17,7 +17,7 @@ pub async fn init_config(){
     SQLITE_POOL.set(
         Pool::new(
             SqliteConnectionManager::file(
-                env::var("SQLITE_PATH").unwrap()
+                "data/shortener.db"
             )
         ).unwrap()
     ).unwrap();
