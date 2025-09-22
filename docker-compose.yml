@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  url-shortner:
+    build: .
+    container_name: url-shortner
+    depends_on:
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      - ROCKET_ADDRESS=0.0.0.0
+      - ROCKET_PORT=8000
+      - REDIS_URL=redis://redis:6379
+      - SQLITE_PATH=/app/data/shortener.db
+    volumes:
+      - ./data:/app/data   # Persist SQLite DB file
+    command: ["./url-shortner"]  # Compiled Rust binary
+
+volumes:
+  redis-data:
