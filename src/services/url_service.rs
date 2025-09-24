@@ -12,7 +12,7 @@ const TTL_SECONDS: u64 = 60 * 60; // 1 day
 pub async fn shorten_url(long_url: &str) -> Result<String, Box<dyn Error>> {
     println!("Shortening URL: {}", long_url);
     let short_code = nanoid!(6);
-    let short_url = format!("{}/{}", HOST_NAME.get().unwrap(), short_code);
+    let short_url = format!("{}{}", HOST_NAME.get().unwrap(), short_code);
     println!("Short URL: {:?}", REDIS_CLIENT.get());
     let redis_db = RedisDb::default(REDIS_CLIENT.get().unwrap());
     redis_db
