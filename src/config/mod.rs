@@ -21,7 +21,11 @@ pub async fn init_config(){
             )
         ).unwrap()
     ).unwrap();
-    HOST_NAME.set(env::var("HOST_NAME").unwrap()).unwrap();
+    let environment = env::var("ENV").unwrap_or("development".to_string());
+    if environment == "development" {
+        let data = format!("http://localhost:{}", env::var("PORT").unwrap());
+        HOST_NAME.set(data).unwrap();
+    }
     REDIS_CLIENT.set(Client::open(env::var("REDIS_URL").unwrap()).unwrap()).unwrap();
     println!("Initialized Redis client");
     let sqlite_db = SqliteDb::default(SQLITE_POOL.get().unwrap());

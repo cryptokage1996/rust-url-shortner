@@ -6,7 +6,6 @@ pub struct Url {
     pub short_code: String,
     pub long_url: String,
     pub created_at: String, // stored as TEXT in SQLite
-    pub hit_count: i64,
 }
 
 impl Url {
@@ -17,7 +16,6 @@ impl Url {
             short_code: row.get("short_code")?,
             long_url: row.get("long_url")?,
             created_at: row.get("created_at")?,
-            hit_count: row.get("hit_count")?,
         })
     }
 }
